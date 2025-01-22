@@ -30,7 +30,7 @@ func (s *ApiServer) InitServer() {
 func (s *ApiServer) Run() {
 
 	srv := &http.Server{
-		Handler:      middleware.CorsMiddleware(s.m),
+		Handler:      middleware.LoggingMiddleware(middleware.CorsMiddleware(s.m)),
 		Addr:         "0.0.0.0:8080",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,

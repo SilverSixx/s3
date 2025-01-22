@@ -1,14 +1,18 @@
-package api
+package main
 
 import (
-	"fmt"
-	"net/http"
+	"github.com/spf13/viper"
+	"go.uber.org/zap"
+
+	v "github.com/silversixx/s3-go/pkg/config"
+	"github.com/silversixx/s3-go/pkg/logger"
+	api "github.com/silversixx/s3-go/pkg/server"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Hello, World!")
-	})
-
-	http.ListenAndServe(":8080", nil)
+	v.LoadConfig()
+	logger.Initialize(viper.GetString("log_format"), zap.InfoLevel)
+	server := &api.ApiServer{}
+	server.InitServer()
+	server.Run()
 }

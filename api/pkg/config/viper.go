@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	storageUrl  string `json:"storage"`
+	LogFormat    string   `json:"log_format"`
+	AllowOrigins []string `json:"allow_origins"`
 }
 
 func LoadConfig() (*Config, error) {
@@ -44,5 +45,6 @@ func LoadConfig() (*Config, error) {
 }
 
 func setDefaultValues(v *viper.Viper) {
-	v.SetDefault("storageUrl", "https://s3.amazonaws.com")
+	v.SetDefault("log_format", "text")
+	v.SetDefault("allow_origins", []string{"http://localhost:5173"})
 }
